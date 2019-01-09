@@ -1693,6 +1693,9 @@ cmd_highlight(Word *w, int align, char has_param, int num)
 		        color_table[num].b);
 		attr_push(ATTR_BACKGROUND, str);
 	}
+
+	printf("|highlight-start-%i-%i-%i|", color_table[num].r, color_table[num].g, color_table[num].b);
+
 	return FALSE;
 }
 
@@ -4116,6 +4119,8 @@ accumulate_iconv_input(int ch)
  * Returns:	None.
  *=======================================================================*/
 
+int highlight_end = 0;
+
 static void
 word_print_core(Word *w, int groupdepth)
 {
@@ -4143,6 +4148,12 @@ word_print_core(Word *w, int groupdepth)
 
 	/* Mark our place in the stack */
 	attrstack_push();
+
+	// TODO: Check for highlights over several groups
+	if (highlight_end == 1) {
+		printf("|highlight-end|");
+		highlight_end = 0;
+	}
 
 	while (w)
 	{
@@ -4424,6 +4435,11 @@ word_print_core(Word *w, int groupdepth)
 						HashItem *hip = find_command(s, &have_param, &param);
 						if (hip)
 						{
+							// TODO: Check for highlights over several groups
+							if (hip->name == "highlight") {
+								highlight_end = 1;
+							}
+
 							int terminate_group;
 
 							if (hip->func)
