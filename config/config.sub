@@ -1045,7 +1045,7 @@ case $basic_machine in
 		;;
 	ppc64)	basic_machine=powerpc64-unknown
 		;;
-	ppc64-*) basic_machine=powerpc64-`echo $basic_machine | sed 's/^[^-]*-//'`
+	ppc64-* | ppc64p7-*) basic_machine=powerpc64-`echo $basic_machine | sed 's/^[^-]*-//'`
 		;;
 	ppc64le | powerpc64little)
 		basic_machine=powerpc64le-unknown
@@ -1078,17 +1078,11 @@ case $basic_machine in
 	rtpc | rtpc-*)
 		basic_machine=romp-ibm
 		;;
-	s390)
+	s390 | s390-*)
 		basic_machine=s390-ibm
 		;;
-	s390-*)
-		basic_machine=s390-`echo $basic_machine | sed 's/^[^-]*-//'`
-		;;
-	s390x)
+	s390x | s390x-*)
 		basic_machine=s390x-ibm
-		;;
-	s390x-*)
-		basic_machine=s390x-`echo $basic_machine | sed 's/^[^-]*-//'`
 		;;
 	sa29200)
 		basic_machine=a29k-amd
